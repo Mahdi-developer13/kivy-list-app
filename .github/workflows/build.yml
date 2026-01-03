@@ -1,0 +1,39 @@
+name: Build Kivy Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install system dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          python3-pip \
+          git zip unzip \
+          openjdk-17-jdk \
+          autoconf libtool pkg-config \
+          zlib1g-dev libncurses5-dev libncursesw5-dev \
+          cmake libffi-dev libssl-dev
+
+    - name: Install Buildozer
+      run: |
+        pip3 install --upgrade pip
+        pip3 install buildozer cython
+
+    - name: Build APK
+      run: |
+        buildozer -v android debug
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: lift-app-apk
+        path: bin/*.apk
