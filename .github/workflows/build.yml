@@ -46,6 +46,12 @@ jobs:
           "platform-tools" \
           "platforms;android-33" \
           "build-tools;33.0.2"
+          
+    - name: Fix build-tools path for Buildozer
+      run: |
+        mkdir -p $ANDROID_SDK_ROOT/build-tools
+        ln -s $ANDROID_SDK_ROOT/build-tools/33.0.2 \
+              $ANDROID_SDK_ROOT/build-tools/latest || true
 
     - name: Install Buildozer
       run: |
