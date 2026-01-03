@@ -41,7 +41,10 @@ jobs:
     - name: Install SDK packages
       run: |
         yes | sdkmanager --licenses
-        sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+        sdkmanager --install \
+        "platform-tools" \
+        "platforms;android-33" \
+         "build-tools;33.0.2"
 
     - name: Install Buildozer
       run: |
